@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Function Generator</title>
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="apple-touch-icon" href="port.png" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jquerymobile/1.4.5/jquery.mobile.min.css">
+	<link rel="stylesheet" href="css/beer.css">
+<style> 
+
+.ui-input-text, input {
+	width: 100px;
+	min-height: 36px !important;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+	display: inline-block;
+	
+	font-size: 26px;
+}
+
+.unitlabel {
+	width: 50px;
+	font-size: 26px;
+	display: inline-block;
+}
+
+#fgfreqreadonly {
+	width: 155px;
+	font-size: 26px;
+	display: inline-block;
+}
+
+
+.inlinebutton {
+	width: 42px !important;
+	min-height: 36px !important;
+	padding: 2px !important;
+	text-align: center;
+	display: inline-block;
+	padding: auto;
+	font-size: 26px;
+}
+
+.ui-bar-a{
+	margin-top: 0;
+}
+.ui-body-a {
+	padding: 0 0 15px 0;
+}
+
+.ui-controlgroup-horizontal .ui-controlgroup-controls .ui-btn {
+	padding: 4px;
+	margin: 0px;
+	text-align: center;
+	font-size: 26px;
+	height: 32px;
+	min-width: 32px;
+}
+
+</style>
+</head>
+<body style="background-color: #d0d0d0">
+	<div  data-role="main"  class="ui-content jqm-content">
+		<div class="ui-body ui-body-a">
+			<div class="ui-bar ui-bar-a">Left Channel</div>
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<input type="radio" name="wavetypeL" id="wavetypeL-1" value="1" onclick="typeL=1;"/>
+					<label for="wavetypeL-1"><img src="sin.png" /></label>
+					<input type="radio" name="wavetypeL" id="wavetypeL-2" value="2"  onclick="typeL=2;"/>
+					<label for="wavetypeL-2"><img src="sqr.png" /></label>
+					<input type="radio" name="wavetypeL" id="wavetypeL-3" value="3"  onclick="typeL=3;"/>
+					<label for="wavetypeL-3"><img src="tri.png" /></label>
+					<input type="radio" name="wavetypeL" id="wavetypeL-4" value="4" onclick="typeL=4;"/>
+					<label for="wavetypeL-4"><img src="downsaw.png" /></label>
+					<input type="radio" name="wavetypeL" id="wavetypeL-5" value="5"  onclick="typeL=5;"/>
+					<label for="wavetypeL-5"><img src="upsaw.png" /></label>
+					<input type="radio" name="wavetypeL" id="wavetypeL-6" value="6"  onclick="typeL=6;"/>
+					<label for="wavetypeL-6"><img src="wnoise.png" /></label>
+					<input type="radio" name="wavetypeL" id="wavetypeL-7" value="0"  checked="checked"  onclick="typeL=0;"/>
+					<label for="wavetypeL-7"><img src="off.png" /></label>
+				</fieldset>
+				<div>
+					<button class="inlinebutton" onclick="generalPlus('#fgfreql',-1);"">-</button>	
+					<input id="fgfreql" type="number" value=440 step = 1 data-wrapper-class="controlgroup-textinput"/>
+					<div class="unitlabel">Hz</div>
+				<button class="inlinebutton" onclick="generalPlus('#fgfreql',1);">+</button>
+				</div>								
+				<div>
+					<button class="inlinebutton" onclick="generalPlus('#fggnl',-0.1);">-</button>	
+					<input id="fggnl" type="number" value=0 step = 0.1 data-wrapper-class="controlgroup-textinput"/>
+					<div class="unitlabel">dB</div>
+					<button class="inlinebutton" onclick="generalPlus('#fggnl',0.1);">+</button>
+				</div>
+			</div>
+			<div class="ui-body ui-body-a">
+				<div class="ui-bar ui-bar-a">Right Channel</div>
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<input type="radio" name="wavetypeR" id="wavetypeR-1" value="1" onclick="typeR=1;"/>
+					<label for="wavetypeR-1"><img src="sin.png" /></label>
+					<input type="radio" name="wavetypeR" id="wavetypeR-2" value="2"  onclick="typeR=2;"/>
+					<label for="wavetypeR-2"><img src="sqr.png" /></label>
+					<input type="radio" name="wavetypeR" id="wavetypeR-3" value="3"  onclick="typeR=3;"/>
+					<label for="wavetypeR-3"><img src="tri.png" /></label>
+					<input type="radio" name="wavetypeR" id="wavetypeR-4" value="4" onclick="typeR=4;"/>
+					<label for="wavetypeR-4"><img src="downsaw.png" /></label>
+					<input type="radio" name="wavetypeR" id="wavetypeR-5" value="5"  onclick="typeR=5;"/>
+					<label for="wavetypeR-5"><img src="upsaw.png" /></label>
+					<input type="radio" name="wavetypeR" id="wavetypeR-6" value="6"  onclick="typeR=6;"/>
+					<label for="wavetypeR-6"><img src="wnoise.png" /></label>
+					<input type="radio" name="wavetypeR" id="wavetypeR-7" value="0"  checked="checked"  onclick="typeR=0;"/>
+					<label for="wavetypeR-7"><img src="off.png" /></label>		
+				</fieldset>	
+				<div id="fgfreqreadonly">440 Hz</div>
+				<div id="fgfreqtextdiv">
+					<button class="inlinebutton" onclick="generalPlus('#fgfreqr',-1);">-</button>	
+					<input id="fgfreqr" type="number" value=440 step = 1 data-wrapper-class="controlgroup-textinput"/>
+					<div class="unitlabel">Hz</div>
+					<button class="inlinebutton" onclick="generalPlus('#fgfreqr',1);">+</button>
+				</div>
+				<div>
+					<button class="inlinebutton" onclick="generalPlus('#fgphasr',-1);">-</button>	
+					<input id="fgphasr" type="number" value=0 step = 1 data-wrapper-class="controlgroup-textinput"/>
+					<div class="unitlabel">deg</div>
+					<button class="inlinebutton" onclick="generalPlus('#fgphasr',+1);">+</button>
+				</div>
+				<div>
+					<button class="inlinebutton" onclick="generalPlus('#fggnr',-0.1);">-</button>	
+					<input id="fggnr" type="number" value=0 step = 0.1 data-wrapper-class="controlgroup-textinput"/>
+					<div class="unitlabel">dB</div>
+					<button class="inlinebutton" onclick="generalPlus('#fggnr',0.1);">+</button>
+				</div>
+				<fieldset data-role="controlgroup" data-type="horizontal">
+					<input type="radio" name="harmonic" id="harmon0" value="0" checked="checked" onclick="harmonic(0);"/>
+					<label for="harmon0">&nbsp;F<sub>r</sub>&nbsp;</label>
+					<input type="radio" name="harmonic" id="harmon1" value="1"  onclick="harmonic(1);"/>
+					<label for="harmon1">&nbsp;F<sub>L</sub>&nbsp;</label>
+					<input type="radio" name="harmonic" id="harmon2" value="2"  onclick="harmonic(2);"/>
+					<label for="harmon2">&nbsp;x2&nbsp;</label>
+					<input type="radio" name="harmonic" id="harmon3" value="3" onclick="harmonic(3);"/>
+					<label for="harmon3">&nbsp;x3&nbsp;</label>
+					<input type="radio" name="harmonic" id="harmon4" value="4"    onclick="harmonic(4);"/>
+					<label for="harmon4">&nbsp;x4&nbsp;</label>		
+				</fieldset>
+				
+			</div>
+	</div>
+<script>
+
+var waveTypes = ["Off", "Sine", "Square", "Triangle", "Saw1","Saw2","White"];
+var context;
+var source;
+var audioBuffer;
+var freqL;
+var phaseL;
+var gainL;
+var typeL=0;
+var freqR;
+var phaseR;
+var gainR;
+var typeR=0;
+var freqRmod=0;
+var invertr=false;
+var RIGHT_FREQ;
+
+if (window.hasOwnProperty('AudioContext') && !window.hasOwnProperty('webkitAudioContext'))
+    window.webkitAudioContext = AudioContext;
+	
+window.onload = init;
+
+function harmonic(x)
+{
+	freqRmod=x;
+	if(freqRmod==0)
+	{
+		//show input, hide label
+		$( "#fgfreqreadonly" ).hide();
+		$( "#fgfreqtextdiv" ).show();
+	}
+	else
+	{
+		//show label, hide input
+		$( "#fgfreqreadonly" ).show();
+		$( "#fgfreqtextdiv" ).hide();
+	}
+}
+
+function harmonicR()
+{
+	if(freqRmod==4)	
+		RIGHT_FREQ = parseFloat($( "#fgfreqr" ).val());
+	else
+	{
+		RIGHT_FREQ=freqRmod*LEFT_FREQ;
+	}
+}
+
+function init() {
+    initAudio();
+}
+
+function lfreqplus(x)
+{
+	$( "#fgfreql" ).val(parseFloat($( "#fgfreql" ).val())+x);
+}
+
+function rfreqplus(x)
+{
+	$( "#fgfreqr" ).val(parseFloat($( "#fgfreqr" ).val())+x);
+}
+
+function generalPlus(x,y)
+{
+	if(Math.abs(y)<1)
+		$( x ).val((parseFloat($( x ).val())+y).toFixed(1));
+	else
+		$( x ).val(parseFloat($( x ).val())+y);
+	updateall();
+}
+
+function squareWave(x)
+{
+	x=x%(2*Math.PI);
+	if(x<Math.PI)
+		return 1;
+	else
+		return -1;
+}
+
+function tringle(x)
+{
+	x=(x+1.5*Math.PI)%(2*Math.PI);//Shift 270 degrees for convenience
+	if(x<Math.PI)
+		return 1-2*x/(Math.PI);
+	else
+		return -3+2*x/(Math.PI);
+}
+
+function risingSaw(x)
+{
+	x=(x+Math.PI)%(2*Math.PI);
+	return -0.5+x/(Math.PI);
+}
+
+function fallingSaw(x)
+{
+	x=x%(2*Math.PI);
+	return 0.5-x/(Math.PI);
+}
+
+function whiteNoise(x)
+{
+
+}
+
+function updateall() {
+	SAMPLE_RATE = context.sampleRate;
+	LEFT_FREQ = parseFloat($( "#fgfreql" ).val());
+	//RIGHT_FREQ = parseFloat($( "#fgfreqr" ).val());
+	LEFT_GAIN = Math.pow(10,0.05*parseFloat($( "#fggnl" ).val())-1);
+	RIGHT_GAIN=Math.pow(10,0.05*parseFloat($( "#fggnr" ).val())-1)
+	RIGHT_PHASE=parseFloat($( "#fgphasr" ).val())*Math.PI/180;
+	
+	
+	if(freqRmod==0)	
+		RIGHT_FREQ = parseFloat($( "#fgfreqr" ).val());
+	else
+	{
+		RIGHT_FREQ=freqRmod*LEFT_FREQ;
+		$( "#fgfreqreadonly" ).html(RIGHT_FREQ.toFixed(0) + " Hz");
+	}
+	
+	
+	//More accurate length
+	//Will repeat avery two seconds
+	if(!audioBuffer)
+		audioBuffer = context.createBuffer(2,2*SAMPLE_RATE,SAMPLE_RATE);
+	var bbb=audioBuffer.getChannelData(0);
+	var bba=audioBuffer.getChannelData(1);	
+	
+	//If white noise, generate 2 seconds 
+	if(typeL==6)
+	{
+		for (i=0;i<2*SAMPLE_RATE;i++){
+			bbb[i]=(LEFT_GAIN*(Math.random()-0.5));
+		}
+	}
+	//Same white noise source as left channel, invert if necessary
+	if(typeR==6)
+	{
+		for (i=0;i<2*SAMPLE_RATE;i++){
+			bba[i]=(RIGHT_GAIN*(Math.random()-0.5));
+		}
+	}
+	
+	for (i=0;i<2*SAMPLE_RATE;i++){
+		if(typeL==0)
+			bbb[i]=0;
+		else if(typeL==1)
+			bbb[i]=(LEFT_GAIN*Math.sin(2*3.14159265*i*LEFT_FREQ/SAMPLE_RATE));
+		else if(typeL==2)
+			bbb[i]=(LEFT_GAIN*squareWave(2*3.14159265*i*LEFT_FREQ/SAMPLE_RATE));
+		else if(typeL==3)
+			bbb[i]=(LEFT_GAIN*tringle(2*3.14159265*i*LEFT_FREQ/SAMPLE_RATE));
+		else if(typeL==4)
+			bbb[i]=(LEFT_GAIN*risingSaw(2*3.14159265*i*LEFT_FREQ/SAMPLE_RATE));
+		else if(typeL==5)
+			bbb[i]=(LEFT_GAIN*fallingSaw(2*3.14159265*i*LEFT_FREQ/SAMPLE_RATE));
+	}
+	
+	for (i=0;i<2*SAMPLE_RATE;i++){
+		if(typeR==1)
+			bba[i]=(RIGHT_GAIN*Math.sin(2*3.14159265*i*RIGHT_FREQ/SAMPLE_RATE+RIGHT_PHASE));
+		else if(typeR==0)
+			bba[i]=0;
+		else if(typeR==2)
+			bba[i]=(RIGHT_GAIN*squareWave(2*3.14159265*i*RIGHT_FREQ/SAMPLE_RATE+RIGHT_PHASE));
+		else if(typeR==3)
+			bba[i]=(RIGHT_GAIN*tringle(2*3.14159265*i*RIGHT_FREQ/SAMPLE_RATE+RIGHT_PHASE));
+		else if(typeR==4)
+			bba[i]=(RIGHT_GAIN*risingSaw(2*3.14159265*i*RIGHT_FREQ/SAMPLE_RATE+RIGHT_PHASE));
+		else if(typeR==5)
+			bba[i]=(RIGHT_GAIN*fallingSaw(2*3.14159265*i*RIGHT_FREQ/SAMPLE_RATE+RIGHT_PHASE));			
+	}
+	
+	if(!source)
+	{
+		source = context.createBufferSource();
+		source.buffer = audioBuffer;
+	source.connect(context.destination);
+	source.loop = true;
+	source.start(0.0);
+	source.noteOn(0);
+	}
+	else
+	{
+		source.stop();
+		source = context.createBufferSource();
+		source.buffer = audioBuffer;
+		source.connect(context.destination);
+		source.loop = true;
+		source.start(0.0);
+		source.noteOn(0);
+	}
+}
+
+function initAudio() {
+context = new webkitAudioContext();
+$( "#fgfreqreadonly" ).hide();
+}
+
+$( "input" ).change(function() {
+	updateall();
+});
+
+$( document ).ready(function() {initAudio();});
+</script>
+	
+	
+</body>
+</html>
